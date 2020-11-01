@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 
 import 'countries.dart';
 
-
 class Region extends StatefulWidget {
   @override
   _RegionState createState() => _RegionState();
@@ -18,7 +17,7 @@ class Region extends StatefulWidget {
 
 class _RegionState extends State<Region> {
   CountryBloc _bloc;
-  ApiProvider _provider =ApiProvider();
+  ApiProvider _provider = ApiProvider();
   @override
   void initState() {
     super.initState();
@@ -43,106 +42,108 @@ class _RegionState extends State<Region> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-backgroundColor: Colors.white,
-
-appBar: AppBar(
-    backgroundColor: COLORS.hexToColor(COLORS.APP_COLOR) ,
-    title:Text("Region".toUpperCase(),style: TextStyle(
-    fontSize: 15,
-    color: Colors.white,
-    fontFamily: AppString.SEGOEUI_FONT,
-
-))),
-body:
-Container(
-child:Center(
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(top:10,left: 25 ,right: 20,bottom: 5),
-        child: Text("Select a region",textAlign: TextAlign.start,
-          style: TextStyle(
-              fontSize: 15,
-              color: Colors.black,
-              fontFamily: AppString.SEGOEUI_FONT
-          ),),
-      ),
-      Expanded(
-        child: Center(
-          child: StreamBuilder(
-            stream:_bloc.countryListStream,
-            builder: (context, snapshot){
-              if(snapshot.hasData){
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index){
-                    return
-                    Padding(
-                      padding: EdgeInsets.only(top:5,left: 2,right: 2,bottom: 5),
-                      child: ListTile(
-                        hoverColor: Colors.black,
-                        onTap: ()
-                        {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                Countries( country:getData(snapshot).elementAt(index), region:getData(snapshot).elementAt(index).region)),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+            backgroundColor: COLORS.hexToColor(COLORS.APP_COLOR),
+            title: Text("Region".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontFamily: AppString.SEGOEUI_FONT,
+                ))),
+        body: Container(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: 10, left: 25, right: 20, bottom: 5),
+                  child: Text(
+                    "Select a region",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontFamily: AppString.SEGOEUI_FONT),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: StreamBuilder(
+                      stream: _bloc.countryListStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    top: 5, left: 2, right: 2, bottom: 5),
+                                child: ListTile(
+                                  hoverColor: Colors.black,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Countries(
+                                              country: getData(snapshot)
+                                                  .elementAt(index),
+                                              region: getData(snapshot)
+                                                  .elementAt(index)
+                                                  .region)),
+                                    );
+                                  },
+                                  title: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(7.0)),
+                                        color: getData(snapshot)
+                                            .elementAt(index)
+                                            .regionColor,
+                                      ),
+                                      child: Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text(
+                                            getData(snapshot)
+                                                .elementAt(index)
+                                                .region,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontFamily:
+                                                    AppString.SEGOEUI_FONT),
+                                          ))),
+                                ),
+                              );
+                            },
                           );
-                        },
-                        title: Container(
-                            decoration:  BoxDecoration (
-                              borderRadius: new BorderRadius.all(new Radius.circular(7.0)),
-                              color: getData(snapshot).elementAt(index).regionColor,
-                            ),
-                            child:Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(getData(snapshot).elementAt(index).region,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    fontFamily: AppString.SEGOEUI_FONT
-
-                                  ),))
-                        ),
-                      ),
-                    )
-                      ;
-                  },
-                );
-              }else{
-                     return CircularProgressIndicator();
-              }
-            },
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    ],
-  ),
-),
-
-)
-    );
-      
-      
-
+        ));
   }
 
- List<Country>getData(AsyncSnapshot snapshot)
- {
-   List<Country> datas= snapshot.data;
-   for( int i=0;i<datas.length;i++){
-    print(datas[i].region);
+  List<Country> getData(AsyncSnapshot snapshot) {
+    List<Country> datas = snapshot.data;
+    for (int i = 0; i < datas.length; i++) {
+      print(datas[i].region);
+    }
+    return datas;
   }
-   return datas;
- }
 }
 
-
 class RegionList extends StatelessWidget {
-   final List <Country> countryList;
-   const RegionList({Key key, this.countryList}) : super(key: key);
+  final List<Country> countryList;
+  const RegionList({Key key, this.countryList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +157,7 @@ class RegionList extends StatelessWidget {
                 vertical: 1.0,
               ),
               child: InkWell(
-                  onTap: () {
-                    },
+                  onTap: () {},
                   child: SizedBox(
                     height: 65,
                     child: Container(
@@ -168,10 +168,10 @@ class RegionList extends StatelessWidget {
                         child: Text(
                           countryList.elementAt(index).name,
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w100,
-                              ),
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w100,
+                          ),
                           textAlign: TextAlign.left,
                         ),
                       ),
