@@ -80,14 +80,15 @@ child:Center(
                   itemBuilder: (context, index){
                     return
                     Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.only(top:5,left: 2,right: 2,bottom: 5),
                       child: ListTile(
                         hoverColor: Colors.black,
                         onTap: ()
                         {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Countries( country:getData(snapshot).elementAt(index), region:getData(snapshot).elementAt(index).region)),
+                            MaterialPageRoute(builder: (context) =>
+                                Countries( country:getData(snapshot).elementAt(index), region:getData(snapshot).elementAt(index).region)),
                           );
                         },
                         title: Container(

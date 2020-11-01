@@ -21,10 +21,10 @@ class COLORS {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
-  static List<Color> regionColorList=[Colors.red[900],Colors.indigo[900],Colors.deepOrange[900]
-               ,Colors.teal[900],Colors.blueGrey[900],Colors.brown[900]];
+  static List<Color> regionColorList=[Colors.red[900],Colors.black,Colors.orange[900]
+               ,Colors.teal[900],CYAN_BLUE_COLOR,Colors.brown[900]];
 
 
-  static List<Color> countryColor=[Colors.red[300],Colors.indigo[300],Colors.deepOrange[300]
-    ,Colors.teal[300],Colors.blueGrey[300],Colors.brown[300]];
+  static List<Color> countryColor=[Colors.red[300],Colors.black54,Colors.orange[700]
+    ,Colors.teal[300],Colors.blue[700],Colors.brown[300]];
 }
